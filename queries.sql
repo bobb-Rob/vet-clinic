@@ -49,6 +49,7 @@ SET weight_kg = weight_kg * -1
 WHERE weight_kg < 0;
 COMMIT;
 
+---------- Aggregates queries-----------
 SELECT count(*) FROM animals;
 
 SELECT count(*) FROM animals
