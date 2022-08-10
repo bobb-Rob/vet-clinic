@@ -2,7 +2,7 @@
 
 SELECT * from animals WHERE name LIKE '%mon%';
 
-SELECT name FROM animals WHERE date_of_birth BETWEEN '2016-01-01' AND '2019-01-10';
+SELECT name FROM animals WHERE date_of_birth BETWEEN '2016-01-01' AND '2019-01-01';
 
 SELECT name FROM animals WHERE neutered=true AND escape_attempts < 3;
 
@@ -60,7 +60,7 @@ FROM animals;
 SELECT 
   MAX(escape_attempts)
 FROM animals
-WHERE neutered = TRUE OR neutered = FASLE;
+WHERE neutered = TRUE OR neutered = FALSE;
 
 SELECT   
   MAX(weight_kg),
@@ -77,7 +77,7 @@ WHERE species = 'pokemon';
 SELECT   
   AVG(escape_attempts) ::numeric(10,2)
 FROM animals
-WHERE date_of_birth >= '1990-01-01' AND date_of_birth <= '2000-31-12';
+WHERE date_of_birth >= '1990-01-01' AND date_of_birth <= '2000-12-30';
 
 
 
