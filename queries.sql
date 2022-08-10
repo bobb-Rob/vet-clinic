@@ -77,8 +77,7 @@ WHERE species = 'pokemon';
 SELECT   
   AVG(escape_attempts) ::numeric(10,2)
 FROM animals
-WHERE species like 'pokemon%' AND 
-date_of_birth BETWEEN '01-01-1990' AND '01-01-2000';
+WHERE date_of_birth >= '1990-01-01' AND date_of_birth <= '2000-31-12';
 
 
 
