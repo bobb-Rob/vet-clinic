@@ -188,3 +188,50 @@ JOIN species ON species.id = animals.species_id
 WHERE vets.name = 'Maisy Smith'
 GROUP BY species.name 
 ORDER BY count DESC LIMIT 1;
+
+
+EXPLAIN ANALYZE SELECT COUNT(*) FROM visits where animals_id = 4;
+
+--                                                                   QUERY PLAN
+-- ----------------------------------------------------------------------------------------------------------------------------------------------
+--  Finalize Aggregate  (cost=43339.05..43339.06 rows=1 width=8) (actual time=16437.401..16593.192 rows=1 loops=1)
+--    ->  Gather  (cost=43338.84..43339.05 rows=2 width=8) (actual time=16422.364..16593.164 rows=3 loops=1)
+--          Workers Planned: 2
+--          Workers Launched: 2
+--          ->  Partial Aggregate  (cost=42338.84..42338.85 rows=1 width=8) (actual time=15752.669..15752.671 rows=1 loops=3)
+--                ->  Parallel Seq Scan on visits  (cost=0.00..41964.33 rows=149802 width=0) (actual time=74.124..15669.058 rows=119810 loops=3)
+--                      Filter: (animals_id = 4)
+--                      Rows Removed by Filter: 1198100
+--  Planning Time: 0.614 ms
+--  Execution Time: 16593.722 ms
+-- (10 rows)
+
+-- Action plan to reduce execution time
+
+
+
+
+
+EXPLAIN ANALYZE SELECT * FROM visits where vets_id = 2;
+--                                                     QUERY PLAN
+-- ------------------------------------------------------------------------------------------------------------------
+--  Seq Scan on visits  (cost=0.00..70793.60 rows=995285 width=16) (actual time=0.190..5377.232 rows=988436 loops=1)
+--    Filter: (vets_id = 2)
+--    Rows Removed by Filter: 2965292
+--  Planning Time: 85.439 ms
+--  Execution Time: 5591.805 ms
+-- (5 rows)
+
+ EXPLAIN ANALYZE SELECT * FROM owners where email = 'owner_18327@mail.com';
+
+--                                                        QUERY PLAN                                              
+-- ------------------------------------------------------------------------------------------------------------------------
+--  Gather  (cost=1000.00..36372.96 rows=1 width=43) (actual time=8.695..694.490 rows=1 loops=1)
+--    Workers Planned: 2
+--    Workers Launched: 2
+--    ->  Parallel Seq Scan on owners  (cost=0.00..35372.86 rows=1 width=43) (actual time=121.469..339.741 rows=0 loops=3)
+--          Filter: ((email)::text = 'owner_18327@mail.com'::text)
+--          Rows Removed by Filter: 833335
+--  Planning Time: 3.674 ms
+--  Execution Time: 694.544 ms
+-- (8 rows)

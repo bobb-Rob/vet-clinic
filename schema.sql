@@ -66,3 +66,7 @@ ALTER TABLE owners ADD COLUMN email VARCHAR(120);
 ALTER TABLE visits DROP CONSTRAINT visits_pkey;
 
 ALTER TABLE visits ADD COLUMN id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY;
+
+CREATE INDEX visits_animalsId_asc ON visits(animals_id ASC);
+CREATE INDEX visits_vetsId_asc ON visits(vets_id ASC);
+CREATE INDEX owners_email_asc ON owners(email ASC);
