@@ -62,3 +62,7 @@ CREATE TABLE visits (
 
 -- Alter Owners Table with new column added 
 ALTER TABLE owners ADD COLUMN email VARCHAR(120);
+
+ALTER TABLE visits DROP CONSTRAINT visits_pkey;
+
+ALTER TABLE visits ADD COLUMN id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY;

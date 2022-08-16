@@ -72,3 +72,8 @@ INSERT INTO visits (animals_id, vets_id, date_of_visit)
   (8,4,'2020-10-3'), (8,4,'2020-11-4'), (9,2,'2019-01-24'),
   (9,2,'2019-05-15'), (9,2,'2020-02-27'), (9,2,'2020-08-3'),
   (10,3,'2020-05-24'), (10,1,'2021-01-11');
+
+  INSERT INTO visits (animals_id, vets_id, date_of_visit) 
+  SELECT * FROM (SELECT id FROM animals) animals_ids, 
+  (SELECT id FROM vets) vets_ids, 
+  generate_series('1980-01-01'::timestamp, '2021-01-01', '4 hours') visit_timestamp;
