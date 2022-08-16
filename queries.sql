@@ -192,7 +192,7 @@ ORDER BY count DESC LIMIT 1;
 
 EXPLAIN ANALYZE SELECT COUNT(*) FROM visits where animals_id = 4;
 
---                                                                   QUERY PLAN
+--    Before Performance audit                      QUERY PLAN
 -- ----------------------------------------------------------------------------------------------------------------------------------------------
 --  Finalize Aggregate  (cost=43339.05..43339.06 rows=1 width=8) (actual time=16437.401..16593.192 rows=1 loops=1)
 --    ->  Gather  (cost=43338.84..43339.05 rows=2 width=8) (actual time=16422.364..16593.164 rows=3 loops=1)
@@ -206,8 +206,21 @@ EXPLAIN ANALYZE SELECT COUNT(*) FROM visits where animals_id = 4;
 --  Execution Time: 16593.722 ms
 -- (10 rows)
 
--- Action plan to reduce execution time
-
+--  After Performance audit                 QUERY PLAN                                    
+-- --------------------------------------------------------------------------------------------------------------------------------------------------------------
+--  Finalize Aggregate  (cost=28702.90..28702.91 rows=1 width=8) (actual time=463.984..483.569 rows=1 loops=1)
+--    ->  Gather  (cost=28702.68..28702.89 rows=2 width=8) (actual time=463.355..483.548 rows=3 loops=1)
+--          Workers Planned: 2
+--          Workers Launched: 2
+--          ->  Partial Aggregate  (cost=27702.68..27702.69 rows=1 width=8) (actual time=347.470..347.472 rows=1 loops=3)
+--                ->  Parallel Bitmap Heap Scan on visits  (cost=4056.46..27323.64 rows=151615 width=0) (actual time=17.503..333.469 rows=119810 loops=3)
+--                      Recheck Cond: (animals_id = 5)
+--                      Heap Blocks: exact=10759
+--                      ->  Bitmap Index Scan on visits_animalsid_asc  (cost=0.00..3965.49 rows=363875 width=0) (actual time=39.896..39.897 rows=359429 loops=1)
+--                            Index Cond: (animals_id = 5)
+--  Planning Time: 0.314 ms
+--  Execution Time: 483.688 ms
+-- (12 rows)
 
 
 
@@ -223,7 +236,6 @@ EXPLAIN ANALYZE SELECT * FROM visits where vets_id = 2;
 --  Execution Time: 5591.805 ms
 -- (5 rows)
 
-EXPLAIN ANALYZE SELECT * FROM visits where vets_id = 2;
 --  After Performance audit    QUERY PLAN               
 -- ------------------------------------------------------------------------------------------------------------------------------------------
 --  Bitmap Heap Scan on visits  (cost=11085.89..44898.95 rows=995285 width=16) (actual time=95.810..760.691 rows=988436 loops=1)
@@ -238,14 +250,22 @@ EXPLAIN ANALYZE SELECT * FROM visits where vets_id = 2;
 
  EXPLAIN ANALYZE SELECT * FROM owners where email = 'owner_18327@mail.com';
 
---                                                        QUERY PLAN                                              
--- ------------------------------------------------------------------------------------------------------------------------
---  Gather  (cost=1000.00..36372.96 rows=1 width=43) (actual time=8.695..694.490 rows=1 loops=1)
+--  Before Performance audit                    QUERY PLAN                       
+-- --------------------------------------------------------------------------------------------------------------------------
+--  Gather  (cost=1000.00..36372.96 rows=1 width=43) (actual time=179.942..6066.737 rows=1 loops=1)
 --    Workers Planned: 2
 --    Workers Launched: 2
---    ->  Parallel Seq Scan on owners  (cost=0.00..35372.86 rows=1 width=43) (actual time=121.469..339.741 rows=0 loops=3)
+--    ->  Parallel Seq Scan on owners  (cost=0.00..35372.86 rows=1 width=43) (actual time=3720.055..5679.163 rows=0 loops=3)
 --          Filter: ((email)::text = 'owner_18327@mail.com'::text)
 --          Rows Removed by Filter: 833335
---  Planning Time: 3.674 ms
---  Execution Time: 694.544 ms
+--  Planning Time: 1.397 ms
+--  Execution Time: 6066.779 ms
 -- (8 rows)
+
+--   After Performance audit                        QUERY PLAN                                                      
+-- --------------------------------------------------------------------------------------------------------------------------
+--  Index Scan using owners_email_asc on owners  (cost=0.43..8.45 rows=1 width=43) (actual time=0.110..0.112 rows=1 loops=1)
+--    Index Cond: ((email)::text = 'owner_18327@mail.com'::text)
+--  Planning Time: 4.381 ms
+--  Execution Time: 0.200 ms
+-- (4 rows)
