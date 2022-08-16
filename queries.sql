@@ -213,7 +213,8 @@ EXPLAIN ANALYZE SELECT COUNT(*) FROM visits where animals_id = 4;
 
 
 EXPLAIN ANALYZE SELECT * FROM visits where vets_id = 2;
---                                                     QUERY PLAN
+
+-- Before Performance audit         QUERY PLAN
 -- ------------------------------------------------------------------------------------------------------------------
 --  Seq Scan on visits  (cost=0.00..70793.60 rows=995285 width=16) (actual time=0.190..5377.232 rows=988436 loops=1)
 --    Filter: (vets_id = 2)
@@ -221,6 +222,19 @@ EXPLAIN ANALYZE SELECT * FROM visits where vets_id = 2;
 --  Planning Time: 85.439 ms
 --  Execution Time: 5591.805 ms
 -- (5 rows)
+
+EXPLAIN ANALYZE SELECT * FROM visits where vets_id = 2;
+--  After Performance audit    QUERY PLAN               
+-- ------------------------------------------------------------------------------------------------------------------------------------------
+--  Bitmap Heap Scan on visits  (cost=11085.89..44898.95 rows=995285 width=16) (actual time=95.810..760.691 rows=988436 loops=1)
+--    Recheck Cond: (vets_id = 2)
+--    Heap Blocks: exact=21372
+--    ->  Bitmap Index Scan on visits_vetsid_asc  (cost=0.00..10837.07 rows=995285 width=0) (actual time=87.892..87.892 rows=988436 loops=1)
+--          Index Cond: (vets_id = 2)
+--  Planning Time: 0.213 ms
+--  Execution Time: 817.928 ms
+-- (7 rows)
+
 
  EXPLAIN ANALYZE SELECT * FROM owners where email = 'owner_18327@mail.com';
 
