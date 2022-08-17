@@ -3,6 +3,10 @@
 > This projects uses a relational database to create the initial data structure for a vet clinic. Within the database, I created a table to store animals' information, insert some data into it, and query it.
 
 
+## Schema Diagram
+
+![Schema Diagram](./schema-diagram.png)
+
 ## Getting Started
 
 This repository includes files with plain SQL that can be used to recreate a database:
@@ -17,6 +21,7 @@ This repository includes files with plain SQL that can be used to recreate a dat
 | 👤 Name | Github | Twitter | LinkedIn |
 |------|--------|---------|----------|
 |Robertson Akpan|[@bobb-rob](https://github.com/bobb-rob)|[@___Robertson](https://twitter.com/___Robertson)|[@RobertsonAkpan](https://www.linkedin.com/in/robertsonakpan/)|
+|Bright Ahiadeke|[@kwekubright](https://github.com/kwekubright)|[@kwekubright_](https://twitter.com/kwekubright_)|[Bright Ahiadeke](https://www.linkedin.com/in/kwekubright/)|
 
 ## 🤝 Contributing
 
