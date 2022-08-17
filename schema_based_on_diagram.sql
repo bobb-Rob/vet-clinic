@@ -45,3 +45,14 @@ CREATE TABLE invoice_items (
   FOREIGN KEY (treatment_id) REFERENCES treatments (id) ON DELETE CASCADE,
   FOREIGN KEY (invoice_id) REFERENCES invoices (id) ON DELETE CASCADE
 );
+
+CREATE INDEX ON invoice_items (invoice_id);
+CREATE INDEX ON invoice_items (treatment_id);
+
+CREATE INDEX ON invoices(medical_history_id);
+
+CREATE INDEX ON medical_histories (patient_id);
+
+CREATE INDEX ON treatments_medical_histories (treatment_id);
+CREATE INDEX ON treatments_medical_histories (medical_history_id);
+
