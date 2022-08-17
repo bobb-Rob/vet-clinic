@@ -21,6 +21,7 @@ This repository includes files with plain SQL that can be used to recreate a dat
 | 👤 Name | Github | Twitter | LinkedIn |
 |------|--------|---------|----------|
 |Robertson Akpan|[@bobb-rob](https://github.com/bobb-rob)|[@___Robertson](https://twitter.com/___Robertson)|[@RobertsonAkpan](https://www.linkedin.com/in/robertsonakpan/)|
+|Bright Ahiadeke|[@kwekubright](https://github.com/kwekubright)|[@kwekubright_](https://twitter.com/kwekubright_)|[Bright Ahiadeke](https://www.linkedin.com/in/kwekubright/)|
 
 ## 🤝 Contributing
 

@@ -6,16 +6,16 @@ CREATE TABLE patients (
 
 CREATE TABLE medical_histories (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  admitted_at timestamp,
+  admitted_at timestamp NOT NULL,
   patient_id INT, 
-  status VARCHAR,
+  status VARCHAR NOT NULL,
   FOREIGN KEY (patient_id) REFERENCES patients (id) ON DELETE CASCADE
 );
 
 CREATE TABLE treatments (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   type VARCHAR,
-  name VARCHAR
+  name VARCHAR NOT NULL
 );
 
 CREATE TABLE treatments_medical_histories (
@@ -28,7 +28,7 @@ CREATE TABLE treatments_medical_histories (
 
 CREATE TABLE invoices (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  total_amount DECIMAL,
+  total_amount DECIMAL NOT NULL,
   generated_at timestamp,
   payed_at timestamp,
   medical_history_id INT,
@@ -38,7 +38,7 @@ CREATE TABLE invoices (
 CREATE TABLE invoice_items (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   unit_price DECIMAL,
-  quantity INT,
+  quantity INT NOT NULL,
   total_price DECIMAL,
   invoice_id INT,
   treatment_id INT,
